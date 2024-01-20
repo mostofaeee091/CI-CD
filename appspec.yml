@@ -2,30 +2,18 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ubuntu/app
+    destination: /var/www/html/laravel  # Adjust the destination based on your Laravel project structure
+
 hooks:
-  ApplicationStop:
-    - location: deployment_scripts/stop_server.sh
-      timeout: 300
-      runas: root
-      
-  BeforeInstall:
-    - location: deployment_scripts/before_install.sh
-      timeout: 300
-      runas: root
-
   AfterInstall:
-    - location: deployment_scripts/after_install.sh
+    - location: scripts/after_install.sh
       timeout: 300
-      runas: root
-
+      runas: ubuntu  # Adjust to your server user
   ApplicationStart:
-    - location: deployment_scripts/start_server.sh
+    - location: scripts/start_server.sh
       timeout: 300
-      runas: root
-
-  ValidateService:
-    - location: deployment_scripts/validate_service.sh
+      runas: ubuntu  # Adjust to your server user
+  ApplicationStop:
+    - location: scripts/stop_server.sh
       timeout: 300
-      runas: root
-  
+      runas: ubuntu  # Adjust to your server user
